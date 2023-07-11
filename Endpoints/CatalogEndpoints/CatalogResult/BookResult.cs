@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WebEndpoint.Data
+﻿namespace WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult
 {
-    public class Book
+    public class BookResult
     {
-        [Key]
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
-
     }
 }
