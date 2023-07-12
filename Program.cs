@@ -18,6 +18,6 @@ app.UseAuthentication();
 app.UseFastEndpoints();
 app.UseRouting();
 
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleEndpointApp V1"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint("swagger", "SampleEndpointApp V1"));
 app.UseHttpsRedirection();
 app.Run();
