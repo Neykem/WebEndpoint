@@ -18,4 +18,8 @@
     <Folder Include="Endpoints\CatalogEndpoints\CatalogResult\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Алексей\Desktop\BookAPI\BookAPI.csproj" />
+  </ItemGroup>
+
 </Project>
