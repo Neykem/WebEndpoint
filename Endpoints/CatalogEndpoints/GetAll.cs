@@ -4,12 +4,9 @@ namespace WebEndpoint.Endpoints.CatalogEndpoints
 {
     public class GetAll : EndpointWithoutRequest
     {
-        private readonly Logger<GetAll> _logger;
-        private readonly IMapper _mapper;
-        public GetAll(Logger<GetAll> logger, IMapper mapper)
+        public GetAll()
         {
-            _logger = logger;
-            _mapper = mapper;
+
         }
 
         public override void Configure()
