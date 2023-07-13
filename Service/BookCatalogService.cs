@@ -11,21 +11,19 @@ namespace WebEndpoint.Service
     {
         public string _idCatalog { get; }
         private readonly IBookRepository _repository;
-        //private readonly ILogger<BookCatalogService> _logger;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public BookCatalogService(IBookRepository repository /*, IMapper mapper,*/ /*ILogger<BookCatalogService> logger*/)
+        public BookCatalogService(IBookRepository repository, IMapper mapper)
         {
             _idCatalog = Guid.NewGuid().ToString();
             _repository = repository;
-            //_mapper = mapper;
-            //_logger = logger;
+            _mapper = mapper;
         }
-        public async Task<List<Book>> ReturnCatalogEntityAsync()
+        public async Task<List<BookResult>> ReturnCatalogEntityAsync()
         {
             var buff = await _repository.GetAllAsync();
-            ///*var res = _mapper.Map<List<Book>, List<BookResult>>(buff*/);
-            return buff;
+            var res = _mapper.Map<List<BookResult>>(buff);
+            return res;
         }
     }
 }

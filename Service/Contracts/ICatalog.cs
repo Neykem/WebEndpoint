@@ -2,6 +2,6 @@
 {
     public interface ICatalog<T,T_dto>
     {
-        Task<List<T>> ReturnCatalogEntityAsync();
+        Task<List<T_dto>> ReturnCatalogEntityAsync();
     }
 }

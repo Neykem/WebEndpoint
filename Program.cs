@@ -1,3 +1,4 @@
+using AutoMapper;
 using BookAPI.Repository;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ builder.Services.AddFastEndpoints();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ICatalog<Book, BookResult>, BookCatalogService>();
 
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
