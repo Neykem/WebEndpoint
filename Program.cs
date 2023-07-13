@@ -8,9 +8,13 @@ var builder = WebApplication.CreateBuilder();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MainContext")));
 
+builder.Services.AddLogging();
+//builder.Services.AddScoped<>
 builder.Services.AddFastEndpoints();
 var app = builder.Build();
 
+
+app.UseHttpLogging();
 app.UseAuthorization();
 app.UseFastEndpoints();
 app.UseRouting();

@@ -1,109 +1,107 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
+﻿using Microsoft.EntityFrameworkCore;
 using WebEndpoint.Data;
-using WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult;
+using WebEndpoint.Exception;
 
 namespace BookAPI.Repository
 {
     public class BookRepository : IBookRepository
     {
         private readonly ApplicationDbContext _context;
-        private IMapper _mapper;
+        private readonly ILogger<BookRepository> _logger;
 
-        public BookRepository(ApplicationDbContext context, IMapper mapper)
+        public BookRepository(ApplicationDbContext context, ILogger<BookRepository> logger)
         {
             _context = context;
-            _mapper = mapper;
+            _logger = logger;
         }
 
-        public Task<bool> CreateAsync(Book obj)
+        public async Task<bool> CreateAsync(Book obj)
         {
-            throw new NotImplementedException();
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+            try
+            {
+                await _context.Books.AddAsync(obj);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Ädd new entity in DB:" + obj.GetType());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error for add new entity in DataBase: " + ex.Message);
+                return false;
+            }
+            return true;
         }
 
-        public Task<bool> DeleteAsync(Book odj)
+        public async Task<bool> DeleteAsync(Book obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (obj == null)
+                {
+                    _logger.LogInformation("Call delete method from null odject:" + obj);
+                    return false;
+                }
+                _logger.LogWarning("Call method for delete entity in DataBase:" + obj);
+                _context.Books.Remove(obj);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"{nameof(Book)} deleted");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error for delete entity from database: " + ex);
+                return false;
+            }
         }
 
         public async Task<List<Book>> GetAllAsync()
         {
             List<Book> booklist = await _context.Books.ToListAsync();
-            return (List<Book>)_mapper.Map<IEnumerable<BookResult>>(booklist);
+            if (booklist == null)
+            {
+                _logger.LogError("Return empty data collection from database");
+                throw new ExceptionEmptyData();
+            }
+            _logger.LogInformation($"{nameof(GetAllAsync)} has been return");
+            return booklist;
         }
 
-        public Task<Book> GetByIdAsync(Guid id)
+        public async Task<Book> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var a = await _context.Books.Where(o => o.Id == id).FirstOrDefaultAsync();
+            if (a == null)
+            {
+                _logger.LogInformation("Return empty req");
+                return a;
+            }
+            _logger.LogInformation("Return result");
+            return a;
+
         }
 
-        public Task<bool> UpdateAsync(Book obj)
+        public async Task<bool> UpdateAsync(Book obj)
         {
-            throw new NotImplementedException();
+            _logger.LogWarning("Call update method for:" + $"{nameof(Book)} entity");
+            if (obj == null)
+            {
+                _logger.LogInformation("Call update method with null object" + $"{nameof(Book)}");
+                return false;
+            }
+            try
+            {
+                _context.Books.Update(obj);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Update entity: " + obj);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error update entity in Database" + ex);
+                return false;
+            }
         }
-
-        //public async Task<BookResult> CreateUpdateProduct(Book bookObj)
-        //{
-        //    Book book = _mapper.Map<Book,BookResult>(book);
-        //    if (book.BookId > 0)
-        //    {
-        //        _context.Books.Update(book);
-        //    }
-        //    else
-        //    {
-        //        _context.Books.Add(book);
-        //    }
-        //    await _context.SaveChangesAsync();
-        //    return _mapper.Map<Book, BookDto>(book);
-        //}
-
-        //public async Task<bool> DeleteAsync(Book odj)
-        //{
-        //    try
-        //    {
-        //        Book book = await _context.Books.FirstOrDefaultAsync(u => u.BookId == bookId);
-        //        if (book == null)
-        //        {
-        //            return false;
-        //        }
-        //        _context.Books.Remove(book);
-        //        await _context.SaveChangesAsync();
-        //        return true;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-        //}
-
-
-
-        //public Task<List<Book>> GetAllAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<Book> GetByIdAsync(Guid id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task<BookDto> GetProductById(int bookId)
-        //{
-        //    Book product = await _context.Books.Where(x => x.BookId == bookId).FirstOrDefaultAsync();
-        //    return _mapper.Map<BookDto>(product);
-        //}
-
-        //public async Task<IEnumerable<BookDto>> GetProducts()
-        //{
-        //    List<Book> booklist = await _context.Books.ToListAsync();
-        //    return _mapper.Map<IEnumerable<BookDto>>(booklist);
-        //}
-
-        //public Task<bool> UpdateAsync(Book obj)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
