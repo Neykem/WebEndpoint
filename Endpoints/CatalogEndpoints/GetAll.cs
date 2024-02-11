@@ -1,5 +1,5 @@
 ﻿using FastEndpoints;
-using WebEndpoint.Data;
+using WebEndpoint.Data.Entity;
 using WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult;
 using WebEndpoint.Service;
 using WebEndpoint.Service.Contracts;

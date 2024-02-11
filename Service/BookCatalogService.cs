@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BookAPI.Repository;
-using WebEndpoint.Data;
-using WebEndpoint.Domain.Contracts;
+using WebEndpoint.Data.Entity;
 using WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult;
 using WebEndpoint.Service.Contracts;
 
@@ -19,6 +18,7 @@ namespace WebEndpoint.Service
             _repository = repository;
             _mapper = mapper;
         }
+
         public async Task<List<BookResult>> ReturnCatalogEntityAsync()
         {
             var buff = await _repository.GetAllAsync();

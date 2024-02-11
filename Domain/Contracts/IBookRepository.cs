@@ -1,4 +1,4 @@
-﻿using WebEndpoint.Data;
+﻿using WebEndpoint.Data.Entity;
 using WebEndpoint.Domain.Contracts;
 
 namespace BookAPI.Repository

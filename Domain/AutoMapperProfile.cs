@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WebEndpoint.Data;
+using WebEndpoint.Data.Entity;
 using WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult;
 
 namespace WebEndpoint.Domain

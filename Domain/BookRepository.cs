@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookAPI.Repository;
+using Microsoft.EntityFrameworkCore;
 using WebEndpoint.Data;
+using WebEndpoint.Data.Entity;
 using WebEndpoint.Exception;
 
-namespace BookAPI.Repository
+namespace WebEndpoint.Domain
 {
     public class BookRepository : IBookRepository
     {
@@ -79,7 +81,6 @@ namespace BookAPI.Repository
             }
             _logger.LogInformation("Return result");
             return a;
-
         }
 
         public async Task<bool> UpdateAsync(Book obj)

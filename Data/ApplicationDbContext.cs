@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebEndpoint.Data.Entity;
 
 namespace WebEndpoint.Data
 {

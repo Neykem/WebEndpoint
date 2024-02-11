@@ -4,6 +4,8 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using WebEndpoint.Data;
+using WebEndpoint.Data.Entity;
+using WebEndpoint.Domain;
 using WebEndpoint.Domain.Contracts;
 using WebEndpoint.Endpoints.CatalogEndpoints.CatalogResult;
 using WebEndpoint.Service;
